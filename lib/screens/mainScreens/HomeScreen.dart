@@ -10,6 +10,7 @@ import 'package:soundify/screens/mainScreens/HomeScreenComponents.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:marquee/marquee.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -152,11 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context,snapshot){
                                 if(snapshot.connectionState==ConnectionState.waiting)
                                 {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      backgroundColor: Color(0xff878787),
-                                    ),
-                                  );
+                                  return Container();
                                 }
                                 else if(snapshot.data.length==0)
                                   {
@@ -186,47 +183,47 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                   ),
                   SizedBox(height: 15,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: AutoSizeText('Playlists For You',maxLines: 1,style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                        ),)),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height*0.03,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.width*0.3 >=
-                        MediaQuery.of(context).size.height*0.25 ?
-                    MediaQuery.of(context).size.width*0.3 :
-                    MediaQuery.of(context).size.height*0.25,
-                    width: double.infinity,
-                    child: FutureBuilder(
+                  FutureBuilder(
                       future: getPlaylistData(),
                       builder: (context,snapshot){
                         if(snapshot.connectionState==ConnectionState.waiting)
                           {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor: Color(0xff878787),
-                              ),
-                            );
+                            return Container();
                           }
                         else{
-                          return ListView.builder(
-                            itemCount: snapshot.data.length,
-                              itemBuilder: (context,index){
-                                  return Components().Playlist_Card(context, snapshot.data[index].data()["url"], snapshot.data[index].data()["name"]);
-                              },
-                            scrollDirection: Axis.horizontal,
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: AutoSizeText('Playlists For You',maxLines: 1,style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),)),
+                              ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height*0.03,
+                              ),
+                              Container(
+                                height: MediaQuery.of(context).size.width*0.3 >=
+                                    MediaQuery.of(context).size.height*0.25 ?
+                                MediaQuery.of(context).size.width*0.3 :
+                                MediaQuery.of(context).size.height*0.25,
+                                width: double.infinity,
+                                child: ListView.builder(
+                                  itemCount: snapshot.data.length,
+                                    itemBuilder: (context,index){
+                                        return Components().Playlist_Card(context, snapshot.data[index].data()["url"], snapshot.data[index].data()["name"]);
+                                    },
+                                  scrollDirection: Axis.horizontal,
+                                ),
+                              ),
+                            ],
                           );
                         }
                       },
-                    ),
                   ),
                   SizedBox(height: 10,),
                   StreamBuilder(
@@ -250,19 +247,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: MediaQuery.of(context).size.height*0.03,
                               ),
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: 20),
-                                height: MediaQuery.of(context).size.width*0.3 >= MediaQuery.of(context).size.height*0.25 ? MediaQuery.of(context).size.width*0.3 : MediaQuery.of(context).size.height*0.25,
+                                //margin: EdgeInsets.symmetric(horizontal: 20),
+                                height: 150,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: snapshot.data.docs.length <= 12 ? snapshot.data.docs.length : 12,
                                   itemBuilder: (context,index){
                                     DocumentSnapshot data = snapshot.data.docs[index];
-                                    return Components().RecentlyPlayedSong(context,
+                                    return Components().SongCard(
+                                        context,
                                         data.data()["name"],
                                         data.data()["image"],
                                         data.data()["audio"],
                                         data.data()["artists"],
-                                        color);
+                                        );
                                   },
                                 ),
                               ),
@@ -276,53 +274,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height*0.03,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: AutoSizeText('All Songs',
-                          maxLines: 1,
-                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height*0.03,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    height: MediaQuery.of(context).size.width*0.45,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: FutureBuilder(
+                  FutureBuilder(
                         future: getAllSongs(),
                         builder: (context,snapshot){
                           if(snapshot.connectionState == ConnectionState.waiting)
                             {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  backgroundColor: Color(0xff878787),
-                                ),
-                              );
+                              return Container();
                             }
                           else{
-                            return ListView.builder(
-                                itemCount:  snapshot.data.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context,index)
-                                {
-                                  return Components().RecentlyPlayedSong(context,
-                                      snapshot.data[index].data()["name"],
-                                      snapshot.data[index].data()["image"],
-                                      snapshot.data[index].data()["audio"],
-                                      snapshot.data[index].data()["artists"],
-                                      color
-                                  );
-                                }
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: AutoSizeText('All Songs',
+                                        maxLines: 1,
+                                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height*0.03,
+                                ),
+                                Container(
+                                  height: 150,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ListView.builder(
+                                      itemCount:  snapshot.data.length,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context,index)
+                                      {
+                                        return Components().SongCard(
+                                          context,
+                                          snapshot.data[index].data()["name"],
+                                          snapshot.data[index].data()["image"],
+                                          snapshot.data[index].data()["audio"],
+                                          snapshot.data[index].data()["artists"],
+                                        );
+                                      }
+                                  ),
+                                ),
+                              ],
                             );
                           }
                         },
-                      ),
-                    ),
                   ),
+                  SizedBox(height: 20,),
                 ],
               ),
         ),

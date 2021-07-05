@@ -153,18 +153,25 @@ class _PlaySongPageState extends State<PlaySongPage> {
                             SizedBox(height: 5,),
                             Container(
                                 width: MediaQuery.of(context).size.width*0.65,
-                                height: MediaQuery.of(context).size.height*0.1,
-                                child: Marquee(
-                                  text: widget.songname + '.' + widget.artists_names+'.',
+                                height: 40,
+                                child: widget.songname.toString().length < 30 ? Text(
+                                  widget.songname.toString(),
+                                  style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 16),
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ) :
+                                Marquee(
+                                  text: widget.songname,
                                   style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 16),
                                   scrollAxis: Axis.horizontal,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  blankSpace: 0,
+                                  blankSpace: 50,
                                   velocity: 30.0,
                                   pauseAfterRound: Duration.zero,
                                   numberOfRounds: null,
                                   startPadding: 0,
                                 ),
+
                             ),
                           ],
                         ),
@@ -234,16 +241,18 @@ class _PlaySongPageState extends State<PlaySongPage> {
                   )
               ),
               //song cover image
-              CircleAvatar(
-                  radius: MediaQuery.of(context).size.width*0.31,
-                  backgroundColor: Colors.black,
-                  child: CircleAvatar(
-                    radius: MediaQuery.of(context).size.width*0.3,
-                    backgroundColor: Colors.red,
-                    backgroundImage: NetworkImage(widget.image_url),
-                  ),
+              Container(
+                height: MediaQuery.of(context).size.width*0.7,
+                width: MediaQuery.of(context).size.width*0.7,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  image: DecorationImage(
+                    image: NetworkImage(widget.image_url),
+                    fit: BoxFit.fill,
+                  )
                 ),
-              SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+              ),
+              SizedBox(height: 12,),
               //name tile
               Container(
                 width: double.infinity,
@@ -258,11 +267,23 @@ class _PlaySongPageState extends State<PlaySongPage> {
                         SizedBox(height: 10,),
                         Container(
                             width: MediaQuery.of(context).size.width*0.7,
-                            height: MediaQuery.of(context).size.width*0.1,
-                          child: Marquee(
-                            text: widget.artists_names+' . ',
-                            style: TextStyle(color: Color(0xff989898),fontSize: 18),
-                            velocity: 20,
+                            height: 20,
+                            child: widget.artists_names.length <= 15 ? Text(
+                            widget.artists_names.toString(),
+                            style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 16),
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                          ) :
+                          Marquee(
+                            text: widget.artists_names.toString(),
+                            style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 16),
+                            scrollAxis: Axis.horizontal,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            blankSpace: 50,
+                            velocity: 30.0,
+                            pauseAfterRound: Duration.zero,
+                            numberOfRounds: null,
+                            startPadding: 0,
                           ),
                           //Text(widget.artists_names, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Color(0xff989898),fontSize: 18),)
                         ),
