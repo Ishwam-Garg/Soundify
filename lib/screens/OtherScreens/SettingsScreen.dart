@@ -15,7 +15,6 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
 
-
   bool switch1 = false;
   bool switch2 = false;
   bool _switch3 = false;

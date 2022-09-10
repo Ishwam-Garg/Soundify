@@ -12,7 +12,7 @@ import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:marquee/marquee.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget{
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -167,12 +167,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   return Container(
                                     height: 150,
                                     child: ListView.builder(
+                                      physics: BouncingScrollPhysics(),
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context,index){
                                         return Components().Playlist_Card(
                                             context,
                                             snapshot.data[index].data()["url"],
                                             snapshot.data[index].data()["name"],
+                                            animationController
                                         );
                                       },
                                       scrollDirection: Axis.horizontal,
@@ -212,9 +214,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 height: 150,
                                 width: double.infinity,
                                 child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
                                   itemCount: snapshot.data.length,
                                     itemBuilder: (context,index){
-                                        return Components().Playlist_Card(context, snapshot.data[index].data()["url"], snapshot.data[index].data()["name"]);
+                                        return Components().Playlist_Card(
+                                            context,
+                                            snapshot.data[index].data()["url"],
+                                            snapshot.data[index].data()["name"],
+                                            animationController
+                                        );
                                     },
                                   scrollDirection: Axis.horizontal,
                                 ),
@@ -246,9 +254,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 height: MediaQuery.of(context).size.height*0.03,
                               ),
                               Container(
-                                //margin: EdgeInsets.symmetric(horizontal: 20),
                                 height: 150,
+                                width: MediaQuery.of(context).size.width,
                                 child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   itemCount: snapshot.data.docs.length <= 12 ? snapshot.data.docs.length : 12,
                                   itemBuilder: (context,index){
@@ -259,8 +268,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                         data["image"],
                                         data["audio"],
                                         data["artists"],
-
-                                        );
+                                    );
                                   },
                                 ),
                               ),
@@ -299,6 +307,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   height: 150,
                                   width: MediaQuery.of(context).size.width,
                                   child: ListView.builder(
+                                      physics: BouncingScrollPhysics(),
                                       itemCount:  snapshot.data.length,
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context,index)

@@ -8,7 +8,7 @@ import 'package:soundify/screens/BottomNavScreen.dart';
 import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+//import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -31,193 +31,190 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: _onBackPressed,
-        child: ModalProgressHUD(
-          inAsyncCall: isLoading,
-          child: Scaffold(
-            resizeToAvoidBottomInset: true,
-            backgroundColor: Colors.white,
-            body: Container(
-              color: Colors.black,
-              height: double.infinity,
-              width: double.infinity,
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                    Center(child: AutoSizeText(
-                      'Sign In',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                          color: Colors.white.withOpacity(0.8),
-                        //color: Color(0xff086623),
-                      ),),),
-                    Form(
-                      autovalidateMode: AutovalidateMode.disabled,
-                      child: Container(
-                        width: double.infinity,
-                        //height: MediaQuery.of(context).size.height,
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          children: [
-                            SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                            //email box
-                            TextFormField(
-                              //email
-                              cursorColor: Colors.white,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  decoration: TextDecoration.none
-                              ),
-                              decoration: InputDecoration(
-                                labelText: 'Email',
-                                suffixIcon: Icon(Icons.email,color: Colors.white,size: 20,),
-                                labelStyle: TextStyle(fontSize: 22,color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.bold,),
-                                floatingLabelBehavior: FloatingLabelBehavior.always,
-                                contentPadding: EdgeInsets.symmetric(horizontal: 25,vertical: 20),
-                                enabledBorder: OutlineInputBorder(
-                                  //borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color(0xff086623),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 2,
-                                      color: Color(0xff086623)
-                                  ),
-                                  //borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                            //password box
-                            TextFormField(
-                              //password
-                              cursorColor: Colors.white,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  decoration: TextDecoration.none
-                              ),
-                              obscureText: obsecure_text,
-                              decoration: InputDecoration(
-                                labelText: 'Password',
-                                labelStyle: TextStyle(fontSize: 22,color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.bold),
-                                floatingLabelBehavior: FloatingLabelBehavior.always,
-                                contentPadding: EdgeInsets.symmetric(horizontal: 25,vertical: 20),
-                                //for eye icon to switch on/off obsecure text
-                                suffixIcon: GestureDetector(
-                                  child: Icon(obsecure_icon,color: Colors.white,size: 20,),
-                                  onTap: (){
-                                    setState(() {
-                                      obsecure_text = obsecure_text == true ? false : true;
-                                      obsecure_icon = obsecure_icon == Icons.visibility ? Icons.visibility_off : Icons.visibility;
-                                    });
-                                  },
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color(0xff086623),
-                                  ),
-                                  //borderRadius: BorderRadius.circular(20),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  //borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color(0xff086623),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height*0.03,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                _Sign_in_button(context),
-                                _Forgot_Password_Button(),
-                              ],
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height*0.03,),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: _Sign_Up_Button(context),
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height*0.03,),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.02,),
-                    AutoSizeText('More Ways to Log In',style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.03,),
-                    Container(
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: Colors.white,
+          body: Container(
+            color: Colors.black,
+            height: double.infinity,
+            width: double.infinity,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                  Center(child: AutoSizeText(
+                    'Sign In',
+                    style: GoogleFonts.montserrat(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                        color: Colors.white.withOpacity(0.8),
+                      //color: Color(0xff086623),
+                    ),),),
+                  Form(
+                    autovalidateMode: AutovalidateMode.disabled,
+                    child: Container(
                       width: double.infinity,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //height: MediaQuery.of(context).size.height,
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: (){
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    google_SignIn().then((user){
-                                      if(user!=null)
-                                        {
-                                          CreateUserInFireStore("Google Mail");
-                                          //CreateUserSearchIndexInFireStore();
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => BottomNavScreen()));
-                                        }
-                                      else
-                                        {
-                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                              content: Text('Could not Sign In',style: TextStyle(color: Colors.white),)));
-                                        }
-                                    });
-
+                          SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                          //email box
+                          TextFormField(
+                            //email
+                            cursorColor: Colors.white,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                decoration: TextDecoration.none
+                            ),
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              suffixIcon: Icon(Icons.email,color: Colors.white,size: 20,),
+                              labelStyle: TextStyle(fontSize: 22,color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.bold,),
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              contentPadding: EdgeInsets.symmetric(horizontal: 25,vertical: 20),
+                              enabledBorder: OutlineInputBorder(
+                                //borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color(0xff086623),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color(0xff086623)
+                                ),
+                                //borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                          //password box
+                          TextFormField(
+                            //password
+                            cursorColor: Colors.white,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                decoration: TextDecoration.none
+                            ),
+                            obscureText: obsecure_text,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              labelStyle: TextStyle(fontSize: 22,color: Colors.white.withOpacity(0.8),fontWeight: FontWeight.bold),
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              contentPadding: EdgeInsets.symmetric(horizontal: 25,vertical: 20),
+                              //for eye icon to switch on/off obsecure text
+                              suffixIcon: GestureDetector(
+                                child: Icon(obsecure_icon,color: Colors.white,size: 20,),
+                                onTap: (){
+                                  setState(() {
+                                    obsecure_text = obsecure_text == true ? false : true;
+                                    obsecure_icon = obsecure_icon == Icons.visibility ? Icons.visibility_off : Icons.visibility;
+                                  });
                                 },
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 30,
-                                child: Image.asset(google_icon_path,height: 30,width: 30,fit: BoxFit.fill,),
-                              //Image.asset(image,height: 30,width: 30,fit: BoxFit.fill,),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color(0xff086623),
+                                ),
+                                //borderRadius: BorderRadius.circular(20),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                //borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color(0xff086623),
+                                ),
+                              ),
                             ),
                           ),
-                          _Login_With(apple_icon_path,context),
-                          GestureDetector(
-                            onTap: () async{
-                              setState(() {
-                                isLoading = true;
-                              });
-                              await handleLogin().whenComplete((){
-                                CreateUserInFireStore("Facebook");
-                                //CreateUserSearchIndexInFireStore();
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => BottomNavScreen()));
-                              });
-
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 30,
-                              child: Image.asset(facebook_icon_path,height: 30,width: 30,fit: BoxFit.fill,),
-                              //Image.asset(image,height: 30,width: 30,fit: BoxFit.fill,),
-                            ),
+                          SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _Sign_in_button(context),
+                              _Forgot_Password_Button(),
+                            ],
                           ),
-
+                          SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: _Sign_Up_Button(context),
+                          ),
+                          SizedBox(height: MediaQuery.of(context).size.height*0.03,),
                         ],
                       ),
                     ),
-                  ],
-                ),
-            ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                  AutoSizeText('More Ways to Log In',style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+                  Container(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  google_SignIn().then((user){
+                                    if(user!=null)
+                                      {
+                                        CreateUserInFireStore("Google Mail");
+                                        //CreateUserSearchIndexInFireStore();
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => BottomNavScreen()));
+                                      }
+                                    else
+                                      {
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                            content: Text('Could not Sign In',style: TextStyle(color: Colors.white),)));
+                                      }
+                                  });
+
+                              },
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 30,
+                              child: Image.asset(google_icon_path,height: 30,width: 30,fit: BoxFit.fill,),
+                            //Image.asset(image,height: 30,width: 30,fit: BoxFit.fill,),
+                          ),
+                        ),
+                        _Login_With(apple_icon_path,context),
+                        GestureDetector(
+                          onTap: () async{
+                            setState(() {
+                              isLoading = true;
+                            });
+                            await handleLogin().whenComplete((){
+                              CreateUserInFireStore("Facebook");
+                              //CreateUserSearchIndexInFireStore();
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => BottomNavScreen()));
+                            });
+
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 30,
+                            child: Image.asset(facebook_icon_path,height: 30,width: 30,fit: BoxFit.fill,),
+                            //Image.asset(image,height: 30,width: 30,fit: BoxFit.fill,),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ],
               ),
           ),
-      ),
+            ),
         ),
+      ),
     );
   }
 

@@ -10,58 +10,70 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:marquee/marquee.dart';
 
 class Components {
-  
-  Widget Playlist_Card(BuildContext context,String url,String name){
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: (){
-        Navigator.push(context, CupertinoPageRoute(builder: (context) => PlaylistPage_SilverAppBar(name,url)));
-        AddrecentlyPlayedPlaylist(name, url);
-      },
-      child: Container(
-        margin: EdgeInsets.only(left: 15),
-        width: 150,
-        height: 150,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade400,
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-            image: NetworkImage(url),
-            fit: BoxFit.fill,
+
+  Widget Playlist_Card(BuildContext context,String url,String name,AnimationController animationController){
+    Animation<double> scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);
+    return ScaleTransition(
+      scale: scale,
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTapDown: (_) async {
+          await animationController.forward();
+          await animationController.reverse();
+        },
+        onPanDown: (_) async {
+          await animationController.forward();
+          await animationController.reverse();
+        },
+        onTap: (){
+          Navigator.push(context, CupertinoPageRoute(builder: (context) => PlaylistPage_SilverAppBar(name,url)));
+          AddrecentlyPlayedPlaylist(name, url);
+        },
+        child: Container(
+          margin: EdgeInsets.only(left: 15),
+          width: 150,
+          height: 150,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade400,
+            borderRadius: BorderRadius.circular(15),
+            image: DecorationImage(
+              image: NetworkImage(url),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-                top: 10,
-                right: 10,
-                child: Row(
-                  children: [
-                    Text('1.3K',style: TextStyle(color: Colors.white),),
-                    Icon(Icons.play_arrow_sharp,color: Colors.white,),
-                  ],
-                )),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              left: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.15),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
+          child: Stack(
+            children: [
+              Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Row(
+                    children: [
+                      Text('1.3K',style: TextStyle(color: Colors.white),),
+                      Icon(Icons.play_arrow_sharp,color: Colors.white,),
+                    ],
+                  )),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.15),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(name,maxLines: 2,overflow: TextOverflow.clip,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
                   ),
                 ),
-                child: Center(
-                  child: Text(name,maxLines: 2,overflow: TextOverflow.clip,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
-                ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -84,7 +96,7 @@ class Components {
         Navigator.push(context, MaterialPageRoute(builder: (context) => PlaySongPage(name, image, song, artists)));
       },
       child: Container(
-        height: 160,
+        height: 140,
         width: 150,
         margin: EdgeInsets.only(left: 15),
         decoration: BoxDecoration(
@@ -98,18 +110,18 @@ class Components {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Expanded(child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.25),
-                      Colors.black.withOpacity(0.05),
-                    ]
-                ),
-              ),
-            )),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     gradient: LinearGradient(
+            //         begin: Alignment.topCenter,
+            //         end: Alignment.bottomCenter,
+            //         colors: [
+            //           Colors.black.withOpacity(0.25),
+            //           Colors.black.withOpacity(0.05),
+            //         ]
+            //     ),
+            //   ),
+            // ),
             Positioned(
                 top: 12,
                 left: 12,
