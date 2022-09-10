@@ -64,7 +64,7 @@ class _SignUpState extends State<SignUp> {
                       color: Colors.white.withOpacity(0.8),
                     ),),),
                   Form(
-                    autovalidate: false,
+                    autovalidateMode: AutovalidateMode.disabled,
                     child: Container(
                       width: double.infinity,
                       margin: EdgeInsets.symmetric(horizontal: 20),

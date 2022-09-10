@@ -2,29 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:soundify/screens/BottomNavScreen.dart';
 import 'package:soundify/screens/SignInScreen.dart';
-import 'package:soundify/AppFunctions/Auth.dart';
-import 'dart:async';
-class RootUserLoggedIn extends StatelessWidget {
 
+class RootUserLoggedIn extends StatefulWidget {
+
+  @override
+  State<RootUserLoggedIn> createState() => _RootUserLoggedInState();
+}
+
+class _RootUserLoggedInState extends State<RootUserLoggedIn> {
   User user;
-  
+
+  void load(BuildContext context) async{
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      if(user==null)
+      {
+        print("User found");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (cxt)=>BottomNavScreen()));
+      }
+      else
+      {
+        print("User not found");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (cxt)=>SignIn()));
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    //User is depreciated form of FirebaseUser
-    return FutureBuilder<User>(
-        future: getCurrentUser(),//FirebaseAuth.instance.currentUser() => FirebaseAuth.instance.currentUser
-        builder: (BuildContext context, AsyncSnapshot<User> snapshot)
-        {
-          if(snapshot.hasData)
-            {
-              User user = snapshot.data;
-              print(snapshot.data);
-              return BottomNavScreen();
-            }
-
-          return SignIn();
-
-        }
+    load(context);
+    return Container(
+      height: 40,
+      width: 40,
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

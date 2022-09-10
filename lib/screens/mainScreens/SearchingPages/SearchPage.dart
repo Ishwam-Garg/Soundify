@@ -99,11 +99,11 @@ class _Search_PageState extends State<Search_Page> {
           items: [
             BottomNavigationBarItem(
               icon: _CurrentIndex == 0 ? Icon(EvaIcons.music) : Icon(EvaIcons.musicOutline),
-              title: Text('Songs',style: TextStyle(fontWeight: FontWeight.bold),),
+              label: 'Songs',
             ),
             BottomNavigationBarItem(
               icon: _CurrentIndex == 1 ? Icon(MdiIcons.folder) : Icon(MdiIcons.folderOutline),
-              title: Text('Playlists',style: TextStyle(fontWeight: FontWeight.bold),),
+              label: 'Playlists',
             ),
           ]
       ),

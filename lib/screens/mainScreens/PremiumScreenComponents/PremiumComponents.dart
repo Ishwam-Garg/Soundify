@@ -8,8 +8,8 @@ class PremiumComponents{
   Widget Comparison_Box(BuildContext context,String free,String premium)
   {
     return Container(
-      width: MediaQuery.of(context).size.width*0.7,
-      height: MediaQuery.of(context).size.height*0.22,
+      width: 100,
+      height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children:[
@@ -166,7 +166,7 @@ class PremiumComponents{
   {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 30),
-      height: MediaQuery.of(context).size.height*0.5,
+      height: 300,
       width: MediaQuery.of(context).size.width*0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -178,6 +178,7 @@ class PremiumComponents{
       child: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('1 year of premium',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
@@ -219,7 +220,7 @@ class PremiumComponents{
   {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 30),
-      height: MediaQuery.of(context).size.height*0.5,
+      height: 290,
       width: MediaQuery.of(context).size.width*0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -232,6 +233,7 @@ class PremiumComponents{
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Mini',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 24),),
               Container(
@@ -272,7 +274,7 @@ class PremiumComponents{
   {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 30),
-      height: MediaQuery.of(context).size.height*0.5,
+      height: 300,
       width: MediaQuery.of(context).size.width*0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

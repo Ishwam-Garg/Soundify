@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:audioplayers/audio_cache.dart';
 import 'package:marquee/marquee.dart';
 import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +21,10 @@ class PlaySongPage extends StatefulWidget {
 }
 
 
-class _PlaySongPageState extends State<PlaySongPage> {
+class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMixin{
+
+  AnimationController animationController;
+  Animation<double> scale;
 
   String song_url = 'https://assets.mixkit.co/music/preview/mixkit-trip-hop-vibes-149.mp3';
 
@@ -52,19 +54,19 @@ class _PlaySongPageState extends State<PlaySongPage> {
       });
     });
     audioPlayer.onPlayerStateChanged.listen((playerState) {
-          if(playerState==AudioPlayerState.STOPPED)
+      if(playerState==PlayerState.STOPPED)
             {
               setState(() {
                 audioState = "Stopped";
               });
             }
-          if(playerState==AudioPlayerState.PLAYING)
+          if(playerState==PlayerState.PLAYING)
             {
               setState(() {
                 audioState = "Playing";
               });
             }
-          if(playerState==AudioPlayerState.PAUSED)
+          if(playerState==PlayerState.PAUSED)
           {
             setState(() {
               audioState = "Paused";
@@ -84,6 +86,8 @@ class _PlaySongPageState extends State<PlaySongPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);
     initAudio();
     playAudio();
   }
@@ -241,15 +245,29 @@ class _PlaySongPageState extends State<PlaySongPage> {
                   )
               ),
               //song cover image
-              Container(
-                height: MediaQuery.of(context).size.width*0.7,
-                width: MediaQuery.of(context).size.width*0.7,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  image: DecorationImage(
-                    image: NetworkImage(widget.image_url),
-                    fit: BoxFit.fill,
-                  )
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTapDown: (_) async {
+                  await animationController.forward();
+                  await animationController.reverse();
+                },
+                onPanDown: (_) async {
+                  await animationController.forward();
+                  await animationController.reverse();
+                },
+                child: ScaleTransition(
+                  scale: scale,
+                  child: Container(
+                    height: MediaQuery.of(context).size.width*0.7,
+                    width: MediaQuery.of(context).size.width*0.7,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      image: DecorationImage(
+                        image: NetworkImage(widget.image_url),
+                        fit: BoxFit.fill,
+                      )
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 12,),

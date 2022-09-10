@@ -68,19 +68,23 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           items: [
               BottomNavigationBarItem(
                   icon: _currentIndex == 0 ? Icon(Icons.home) : Icon(MdiIcons.homeOutline),
-                  title: Text('Home',),
+                  label: 'Home',
+                  //title: Text('Home',),
               ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              title: Text('Search'),
+              label: 'Search',
+              //title: Text('Search'),
             ),
             BottomNavigationBarItem(
               icon: _currentIndex == 2 ? Icon(MdiIcons.tagMultiple) : Icon(MdiIcons.tagMultipleOutline),
-              title: AutoSizeText('Your Library',maxLines: 1,),
+              label: 'Your Library',
+              //title: AutoSizeText('Your Library',maxLines: 1,),
             ),
             BottomNavigationBarItem(
               icon: _currentIndex == 3 ? Icon(Icons.stars) : Icon(MdiIcons.starCircleOutline),
-              title: Text('Premium'),
+              label: 'Premium',
+              //title: Text('Premium'),
             ),
           ],
         ),

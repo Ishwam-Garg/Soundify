@@ -13,6 +13,7 @@ class Components {
   
   Widget Playlist_Card(BuildContext context,String url,String name){
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: (){
         Navigator.push(context, CupertinoPageRoute(builder: (context) => PlaylistPage_SilverAppBar(name,url)));
         AddrecentlyPlayedPlaylist(name, url);

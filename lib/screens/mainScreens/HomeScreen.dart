@@ -17,8 +17,10 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin{
 
+  AnimationController animationController;
+  Animation<double> scale;
   User user = auth.currentUser;
 
   Future getPlaylistData() async{
@@ -67,6 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);
     setState(() {
       color = ColorPalette().Genre_colors[ColorPalette().random_color.nextInt(ColorPalette().Genre_colors.length)];
     });
@@ -161,17 +165,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   }
                                 else{
                                   return Container(
-                                    height: MediaQuery.of(context).size.width*0.3 >=
-                                        MediaQuery.of(context).size.height*0.25 ?
-                                    MediaQuery.of(context).size.width*0.3 :
-                                    MediaQuery.of(context).size.height*0.25,
+                                    height: 150,
                                     child: ListView.builder(
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context,index){
                                         return Components().Playlist_Card(
                                             context,
                                             snapshot.data[index].data()["url"],
-                                            snapshot.data[index].data()["name"]);
+                                            snapshot.data[index].data()["name"],
+                                        );
                                       },
                                       scrollDirection: Axis.horizontal,
                                     ),
@@ -207,10 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: MediaQuery.of(context).size.height*0.03,
                               ),
                               Container(
-                                height: MediaQuery.of(context).size.width*0.3 >=
-                                    MediaQuery.of(context).size.height*0.25 ?
-                                MediaQuery.of(context).size.width*0.3 :
-                                MediaQuery.of(context).size.height*0.25,
+                                height: 150,
                                 width: double.infinity,
                                 child: ListView.builder(
                                   itemCount: snapshot.data.length,
@@ -256,10 +255,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     DocumentSnapshot data = snapshot.data.docs[index];
                                     return Components().SongCard(
                                         context,
-                                        data.data()["name"],
-                                        data.data()["image"],
-                                        data.data()["audio"],
-                                        data.data()["artists"],
+                                        data["name"],
+                                        data["image"],
+                                        data["audio"],
+                                        data["artists"],
+
                                         );
                                   },
                                 ),

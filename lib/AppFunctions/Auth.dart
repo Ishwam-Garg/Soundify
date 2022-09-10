@@ -9,16 +9,14 @@ FacebookLogin facebookLogin = FacebookLogin();
 
 Future<User> google_SignIn() async {
   GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-
   if (googleSignIn != null){
     GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
     AuthCredential credential = GoogleAuthProvider.credential(idToken: googleSignInAuthentication.idToken, accessToken: googleSignInAuthentication.accessToken);
 
-    UserCredential result = await auth.signInWithCredential(credential);
+    await auth.signInWithCredential(credential);
 
-    User user = await auth.currentUser;
-
+    User user = auth.currentUser;
 
     print(user.uid);
 
@@ -72,8 +70,9 @@ Future<bool> signOutUser() async{
 }
 
 Future<User> getCurrentUser() async{
-  User user = await auth.currentUser;
-  return user;
+  auth.authStateChanges().listen((User user) {
+    return user;
+  });
 }
 
 //for facebook login
