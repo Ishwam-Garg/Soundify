@@ -16,13 +16,13 @@ class _RootUserLoggedInState extends State<RootUserLoggedIn> {
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       if(user==null)
       {
-        print("User found");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (cxt)=>BottomNavScreen()));
+        print("User not found");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (cxt)=>SignIn()));
       }
       else
       {
-        print("User not found");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (cxt)=>SignIn()));
+        print("User found");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (cxt)=>BottomNavScreen()));
       }
     });
   }
