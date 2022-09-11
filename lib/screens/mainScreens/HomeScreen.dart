@@ -7,11 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:soundify/Components/OuterPlaylistTile.dart';
 import 'package:soundify/Components/OuterSongTile.dart';
 import 'package:soundify/Constants/Color_Pallete.dart';
-import 'package:soundify/Constants/Strings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:marquee/marquee.dart';
+import 'package:soundify/Services/HomeService.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -23,47 +22,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   AnimationController animationController;
   Animation<double> scale;
   User user = auth.currentUser;
-
-  Future getPlaylistData() async{
-    QuerySnapshot qn = await FirebaseFirestore.instance.collection('PlaylistForYou').get();
-    return qn.docs;
-  }
-
-  Future getRecentlyPlayedSongdata() async{
-    User user = await auth.currentUser;
-    QuerySnapshot qn = await FirebaseFirestore.instance.collection("Users").doc(user.uid).collection("Recently Played").get();
-    return qn.docs;
-  }
-
-  Future getRecentlyPlayedPlaylistData() async{
-    User user = await auth.currentUser;
-    QuerySnapshot qn = await FirebaseFirestore.instance.collection("Users").doc(user.uid).collection("Recently Played Playlist").get();
-    return qn.docs;
-  }
-
-  Future getAllSongs() async{
-    QuerySnapshot qn = await FirebaseFirestore.instance.collection("Songs").get();
-    return qn.docs;
-  }
-
-  Future<Null> refreshPage() async{
-
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Loading',style: TextStyle(color: Colors.blue.shade600,fontSize: 18),),
-            Text('Updating this page',style: TextStyle(color: Colors.white,fontSize: 14),),
-          ],
-        ),
-    ));
-
-    await Future.delayed(Duration(seconds: 2));
-    setState(() {
-
-      });
-  }
-
   Color color;
 
   @override
@@ -72,15 +30,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.initState();
     animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);
-    setState(() {
-      color = ColorPalette().Genre_colors[ColorPalette().random_color.nextInt(ColorPalette().Genre_colors.length)];
-    });
   }
-
 
   @override
   Widget build(BuildContext context) {
-
+    color = ColorPalette().Genre_colors[ColorPalette().random_color.nextInt(ColorPalette().Genre_colors.length)];
     DateTime now = DateTime.now();
     var timenow = int.parse(DateFormat('kk').format(now));
     var welcometext = '';
@@ -105,7 +59,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       }
 
     return RefreshIndicator(
-      onRefresh: refreshPage,
+      onRefresh: (){
+        return HomeService().refreshPage(context);
+      },
       backgroundColor: Colors.white,
       color: color,
       child: Container(
@@ -154,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             height: MediaQuery.of(context).size.height*0.02,
                           ),
                           FutureBuilder(
-                              future: getRecentlyPlayedPlaylistData(),
+                              future: HomeService().getRecentlyPlayedPlaylistData(),
                               builder: (context,snapshot){
                                 if(snapshot.connectionState==ConnectionState.waiting)
                                 {
@@ -187,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   ),
                   SizedBox(height: 15,),
                   FutureBuilder(
-                      future: getPlaylistData(),
+                      future: HomeService().getPlaylistData(),
                       builder: (context,snapshot){
                         if(snapshot.connectionState==ConnectionState.waiting)
                           {
@@ -279,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     height: MediaQuery.of(context).size.height*0.03,
                   ),
                   FutureBuilder(
-                        future: getAllSongs(),
+                        future: HomeService().getAllSongs(),
                         builder: (context,snapshot){
                           if(snapshot.connectionState == ConnectionState.waiting)
                             {
