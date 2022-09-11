@@ -23,6 +23,31 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   Animation<double> scale;
   User user = auth.currentUser;
   Color color;
+  String welcometext = '';
+
+  void setWelcomeText(){
+    DateTime now = DateTime.now();
+    var timenow = int.parse(DateFormat('kk').format(now));
+
+    if(timenow <12)
+    {
+      setState(() {
+        welcometext = 'Good Morning';
+      });
+    }
+    else if ((timenow >= 12) && (timenow <= 16))
+    {
+      setState(() {
+        welcometext = 'Good Afternoon';
+      });
+    }
+    else if ((timenow >16) && (timenow <=24))
+    {
+      setState(() {
+        welcometext = 'Good Evening';
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -35,29 +60,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     color = ColorPalette().Genre_colors[ColorPalette().random_color.nextInt(ColorPalette().Genre_colors.length)];
-    DateTime now = DateTime.now();
-    var timenow = int.parse(DateFormat('kk').format(now));
-    var welcometext = '';
-
-    if(timenow <12)
-      {
-        setState(() {
-          welcometext = 'Good Morning';
-        });
-      }
-    else if ((timenow >= 12) && (timenow <= 16))
-      {
-        setState(() {
-          welcometext = 'Good Afternoon';
-        });
-      }
-    else if ((timenow >16) && (timenow <=24))
-      {
-        setState(() {
-          welcometext = 'Good Evening';
-        });
-      }
-
+    setWelcomeText();
     return RefreshIndicator(
       onRefresh: (){
         return HomeService().refreshPage(context);
@@ -69,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         width: double.infinity,
         color: Colors.black,
         child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
                   Container(
@@ -207,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 height: MediaQuery.of(context).size.height*0.03,
                               ),
                               Container(
-                                height: 150,
+                                height: 140,
                                 width: MediaQuery.of(context).size.width,
                                 child: ListView.builder(
                                   physics: BouncingScrollPhysics(),
@@ -256,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   height: MediaQuery.of(context).size.height*0.03,
                                 ),
                                 Container(
-                                  height: 150,
+                                  height: 140,
                                   width: MediaQuery.of(context).size.width,
                                   child: ListView.builder(
                                       physics: BouncingScrollPhysics(),

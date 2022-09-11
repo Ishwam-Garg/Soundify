@@ -37,7 +37,7 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
         scale: scale,
         child: Container(
           height: 140,
-          width: 150,
+          width: 140,
           margin: EdgeInsets.only(left: 15),
           decoration: BoxDecoration(
             color: Colors.black,
@@ -46,25 +46,35 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
               image: NetworkImage(image),
               fit: BoxFit.fill,
             ),
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.25),
-                    Colors.black.withOpacity(0.05),
-                  ]
-              )
           ),
           child: Stack(
             fit: StackFit.expand,
             children: [
               Positioned(
+                  child: Container(
+                height: 140,
+                width: 140,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xff0D2C54).withOpacity(0.8),
+                        Colors.black.withOpacity(0.05),
+                      ]
+                  ),
+                ),
+              )),
+              Positioned(
                   top: 12,
                   left: 12,
                   child: Container(
                     width: 108,
-                    child: Text(name.toString(),
-                      style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 22),
+                    child: Text(
+                      name.toString(),
+                      style: TextStyle(
+                          color: Colors.white,fontWeight: FontWeight.w500,fontSize: 14),
                       maxLines: 2,overflow: TextOverflow.clip,),
                   )
               ),
@@ -73,21 +83,21 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
                 left: 0,
                 right: 0,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 12,vertical: 2),
                   width: 120,
-                  height: 30,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Marquee(
-                      text: artists.toString().toUpperCase(),
-                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14,color: Colors.grey.shade300),
-                      blankSpace: 50,
-                      showFadingOnlyWhenScrolling: true,
-                      velocity: 15.0,
-                      scrollAxis: Axis.horizontal,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      numberOfRounds: null,
-                    ),
+                  height: 14,
+                  //color: Colors.red,
+                  child: Marquee(
+                    text: artists.toString().toUpperCase(),
+                    style: TextStyle(fontWeight: FontWeight.w400,fontSize: 9,color: Colors.grey.shade300),
+                    blankSpace: 10,
+                    showFadingOnlyWhenScrolling: true,
+                    fadingEdgeStartFraction: 0.2,
+                    fadingEdgeEndFraction: 0.2,
+                    velocity: 15.0,
+                    scrollAxis: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    numberOfRounds: null,
                   ),
                 ),
               ),

@@ -47,8 +47,8 @@ class _OuterPlaylistTileState extends State<OuterPlaylistTile> with SingleTicker
         },
         child: Container(
           margin: EdgeInsets.only(left: 15),
+          height: 140,
           width: 150,
-          height: 150,
           decoration: BoxDecoration(
             color: Colors.grey.shade400,
             borderRadius: BorderRadius.circular(15),
