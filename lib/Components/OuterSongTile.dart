@@ -18,6 +18,22 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
   AnimationController animationController;
   Animation<double> scale;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    scale = Tween<double>(
+        begin: 1,
+        end: 0.9).animate(animationController);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    animationController.dispose();
+    super.dispose();
+  }
 
   Widget SongCard(BuildContext context,String name,String image,String song,String artists){
     return GestureDetector(
@@ -60,8 +76,9 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xff0D2C54).withOpacity(0.8),
+                        Color(0xff0D2C54).withOpacity(0.6),
                         Colors.black.withOpacity(0.05),
+                        Color(0xff0D2C54).withOpacity(0.6),
                       ]
                   ),
                 ),
@@ -108,20 +125,7 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
     );
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
-    scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);
-    super.initState();
-  }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    animationController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

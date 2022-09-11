@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   }
                                 else{
                                   return Container(
-                                    height: 150,
+                                    height: 140,
                                     child: ListView.builder(
                                       physics: BouncingScrollPhysics(),
                                       itemCount: snapshot.data.length,
@@ -146,6 +146,103 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                   ),
                   SizedBox(height: 15,),
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection("Users").doc(user.uid).collection("Recently Played").orderBy("TimeStamp",descending: true).snapshots(),
+                    builder: (context,snapshot){
+                      if(snapshot.hasData && snapshot.data.docs.length != 0)
+                      {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: AutoSizeText('Recently Played Songs',maxLines: 1,style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      letterSpacing: 1.5,
+                                  ),)),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height*0.03,
+                            ),
+                            Container(
+                              height: 140,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: snapshot.data.docs.length <= 12 ? snapshot.data.docs.length : 12,
+                                itemBuilder: (context,index){
+                                  DocumentSnapshot data = snapshot.data.docs[index];
+                                  return OuterSongTile(
+                                    data["name"],
+                                    data["image"],
+                                    data["audio"],
+                                    data["artists"],
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                      else
+                        return Container();
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.03,
+                  ),
+                  FutureBuilder(
+                    future: HomeService().getAllSongs(),
+                    builder: (context,snapshot){
+                      if(snapshot.connectionState == ConnectionState.waiting)
+                      {
+                        return Container();
+                      }
+                      else{
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: AutoSizeText('All Songs',
+                                    maxLines: 1,
+                                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      letterSpacing: 1.5,
+                                    ),)),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height*0.03,
+                            ),
+                            Container(
+                              height: 140,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  itemCount:  snapshot.data.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context,index)
+                                  {
+                                    return OuterSongTile(
+                                      snapshot.data[index].data()["name"],
+                                      snapshot.data[index].data()["image"],
+                                      snapshot.data[index].data()["audio"],
+                                      snapshot.data[index].data()["artists"],
+                                    );
+                                  }
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20,),
                   FutureBuilder(
                       future: HomeService().getPlaylistData(),
                       builder: (context,snapshot){
@@ -163,14 +260,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     child: AutoSizeText('Playlists For You',maxLines: 1,style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 16,
+                                      letterSpacing: 1.5,
                                     ),)),
                               ),
                               SizedBox(
                                 height: MediaQuery.of(context).size.height*0.03,
                               ),
                               Container(
-                                height: 150,
+                                height: 140,
                                 width: double.infinity,
                                 child: ListView.builder(
                                   physics: BouncingScrollPhysics(),
@@ -190,99 +288,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       },
                   ),
                   SizedBox(height: 10,),
-                  StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection("Users").doc(user.uid).collection("Recently Played").orderBy("TimeStamp",descending: true).snapshots(),
-                    builder: (context,snapshot){
-                      if(snapshot.hasData && snapshot.data.docs.length != 0)
-                        {
-                          return Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: AutoSizeText('Recently Played Songs',maxLines: 1,style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20
-                                    ),)),
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height*0.03,
-                              ),
-                              Container(
-                                height: 140,
-                                width: MediaQuery.of(context).size.width,
-                                child: ListView.builder(
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: snapshot.data.docs.length <= 12 ? snapshot.data.docs.length : 12,
-                                  itemBuilder: (context,index){
-                                    DocumentSnapshot data = snapshot.data.docs[index];
-                                    return OuterSongTile(
-                                        data["name"],
-                                        data["image"],
-                                        data["audio"],
-                                        data["artists"],
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                      else
-                        return Container();
-                    },
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height*0.03,
-                  ),
-                  FutureBuilder(
-                        future: HomeService().getAllSongs(),
-                        builder: (context,snapshot){
-                          if(snapshot.connectionState == ConnectionState.waiting)
-                            {
-                              return Container();
-                            }
-                          else{
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: AutoSizeText('All Songs',
-                                        maxLines: 1,
-                                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height*0.03,
-                                ),
-                                Container(
-                                  height: 140,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ListView.builder(
-                                      physics: BouncingScrollPhysics(),
-                                      itemCount:  snapshot.data.length,
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context,index)
-                                      {
-                                        return OuterSongTile(
-                                          snapshot.data[index].data()["name"],
-                                          snapshot.data[index].data()["image"],
-                                          snapshot.data[index].data()["audio"],
-                                          snapshot.data[index].data()["artists"],
-                                        );
-                                      }
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-                        },
-                  ),
-                  SizedBox(height: 20,),
                 ],
               ),
         ),

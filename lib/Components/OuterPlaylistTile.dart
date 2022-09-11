@@ -48,7 +48,7 @@ class _OuterPlaylistTileState extends State<OuterPlaylistTile> with SingleTicker
         child: Container(
           margin: EdgeInsets.only(left: 15),
           height: 140,
-          width: 150,
+          width: 140,
           decoration: BoxDecoration(
             color: Colors.grey.shade400,
             borderRadius: BorderRadius.circular(15),
@@ -60,12 +60,31 @@ class _OuterPlaylistTileState extends State<OuterPlaylistTile> with SingleTicker
           child: Stack(
             children: [
               Positioned(
+                  top: 0,
+                  bottom: 0,
+                  child: Container(
+                    height: 140,
+                    width: 140,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      gradient: LinearGradient(
+                          end: Alignment.topLeft,
+                          begin: Alignment.bottomRight,
+                          colors: [
+                            Color(0xff0D2C54).withOpacity(0.5),
+                            Colors.black.withOpacity(0.2),
+                          ]
+                      ),
+                    ),
+                  )),
+              Positioned(
                   top: 10,
                   right: 10,
                   child: Row(
                     children: [
-                      Text('1.3K',style: TextStyle(color: Colors.white),),
-                      Icon(Icons.play_arrow_sharp,color: Colors.white,),
+                      Text('1.3K',style: TextStyle(
+                          color: Colors.white.withOpacity(0.6),fontSize: 10),),
+                      Icon(Icons.play_arrow_sharp,color: Colors.white,size: 10,),
                     ],
                   )),
               Positioned(
@@ -82,9 +101,10 @@ class _OuterPlaylistTileState extends State<OuterPlaylistTile> with SingleTicker
                     ),
                   ),
                   child: Center(
-                    child: Text(name,maxLines: 2,overflow: TextOverflow.clip,
+                    child: Text(
+                      name,maxLines: 2,overflow: TextOverflow.clip,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+                      style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w600),),
                   ),
                 ),
               )
