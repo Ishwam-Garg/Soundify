@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:soundify/Components/OuterPlaylistTile.dart';
+import 'package:soundify/Components/OuterSongTile.dart';
 import 'package:soundify/Constants/Color_Pallete.dart';
 import 'package:soundify/Constants/Strings.dart';
-import 'package:soundify/screens/mainScreens/HomeScreenComponents.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -170,11 +171,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                       physics: BouncingScrollPhysics(),
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context,index){
-                                        return Components().Playlist_Card(
-                                            context,
+                                        return OuterPlaylistTile(
                                             snapshot.data[index].data()["url"],
                                             snapshot.data[index].data()["name"],
-                                            animationController
                                         );
                                       },
                                       scrollDirection: Axis.horizontal,
@@ -217,11 +216,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   physics: BouncingScrollPhysics(),
                                   itemCount: snapshot.data.length,
                                     itemBuilder: (context,index){
-                                        return Components().Playlist_Card(
-                                            context,
+                                        return OuterPlaylistTile(
                                             snapshot.data[index].data()["url"],
                                             snapshot.data[index].data()["name"],
-                                            animationController
                                         );
                                     },
                                   scrollDirection: Axis.horizontal,
@@ -262,8 +259,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   itemCount: snapshot.data.docs.length <= 12 ? snapshot.data.docs.length : 12,
                                   itemBuilder: (context,index){
                                     DocumentSnapshot data = snapshot.data.docs[index];
-                                    return Components().SongCard(
-                                        context,
+                                    return OuterSongTile(
                                         data["name"],
                                         data["image"],
                                         data["audio"],
@@ -312,8 +308,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context,index)
                                       {
-                                        return Components().SongCard(
-                                          context,
+                                        return OuterSongTile(
                                           snapshot.data[index].data()["name"],
                                           snapshot.data[index].data()["image"],
                                           snapshot.data[index].data()["audio"],
