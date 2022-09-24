@@ -87,7 +87,6 @@ class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMix
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
@@ -98,7 +97,6 @@ class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMix
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     audioPlayer.dispose();
   }

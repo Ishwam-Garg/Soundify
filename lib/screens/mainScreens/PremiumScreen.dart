@@ -19,7 +19,6 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Timer.periodic(Duration(seconds: 3), (Timer timer) {
           if(currentIndex < 3)

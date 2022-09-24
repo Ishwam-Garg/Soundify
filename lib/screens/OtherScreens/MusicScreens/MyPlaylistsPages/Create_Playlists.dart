@@ -16,7 +16,6 @@ class _CreatePlaylistsState extends State<CreatePlaylists> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     color = ColorPalette().Genre_colors[ColorPalette().random_color.nextInt(ColorPalette().Genre_colors.length)];
   }

@@ -51,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);

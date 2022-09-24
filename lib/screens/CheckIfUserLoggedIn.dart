@@ -29,7 +29,6 @@ class _RootUserLoggedInState extends State<RootUserLoggedIn> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

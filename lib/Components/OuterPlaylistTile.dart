@@ -120,14 +120,12 @@ class _OuterPlaylistTileState extends State<OuterPlaylistTile> with SingleTicker
 
   @override
   void initState() {
-    // TODO: implement initState
     animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     animationController.dispose();
     super.dispose();
   }

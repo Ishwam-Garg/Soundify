@@ -17,7 +17,6 @@ class _PremiumButtonState extends State<PremiumButton> with SingleTickerProvider
 
   @override
   void initState() {
-    // TODO: implement initState
     animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     scale = Tween<double>(
         begin: 1,
@@ -27,7 +26,6 @@ class _PremiumButtonState extends State<PremiumButton> with SingleTickerProvider
 
   @override
   void dispose() {
-    // TODO: implement dispose
     animationController.dispose();
     super.dispose();
   }

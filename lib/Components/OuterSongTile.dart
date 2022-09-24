@@ -22,7 +22,6 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
 
   @override
   void initState() {
-    // TODO: implement initState
     animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     scale = Tween<double>(
         begin: 1,
@@ -32,7 +31,6 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
 
   @override
   void dispose() {
-    // TODO: implement dispose
     animationController.dispose();
     super.dispose();
   }
