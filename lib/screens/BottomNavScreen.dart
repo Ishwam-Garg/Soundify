@@ -62,7 +62,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             onTap: (index) {
               setState(() {
                 _currentIndex = index;
-                _pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+                _pageController.jumpToPage(index);
               });
             },
           items: [
