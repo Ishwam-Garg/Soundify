@@ -50,7 +50,11 @@ class _PremiumScreenState extends State<PremiumScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height*0.1,),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.12),
-                  child: AutoSizeText('Ends Soon: 1 year of Premium for 999',maxLines: 2,minFontSize: 26,maxFontSize: 38,
+                  child: AutoSizeText('Ends Soon: 1 year of Premium for 999',
+                    maxLines: 2,
+                    minFontSize: 18,
+                    maxFontSize: 26,
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 34),),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*0.05,),

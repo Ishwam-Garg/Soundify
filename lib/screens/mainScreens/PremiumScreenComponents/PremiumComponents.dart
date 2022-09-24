@@ -7,15 +7,17 @@ class PremiumComponents{
 
   Widget Comparison_Box(BuildContext context,String free,String premium)
   {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Container(
       width: 100,
-      height: 50,
+      //height: 30,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children:[
           Container(
-            height: MediaQuery.of(context).size.height*0.22,
-            width: MediaQuery.of(context).size.width*0.35,
+            height: height*0.15 > 100 ? 100 : height*0.15,
+            width: width*0.35 > 140 ? 140 : width*0.35,
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
                 Colors.white30,
@@ -36,8 +38,8 @@ class PremiumComponents{
                   padding: EdgeInsets.only(left: 10,right: 5),
                   child: AutoSizeText(
                     free,
-                    maxFontSize: 24,
-                    minFontSize: 18,
+                    maxFontSize: 14,
+                    minFontSize: 8,
                     maxLines: 2,
                     style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
                 ),
@@ -46,8 +48,8 @@ class PremiumComponents{
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height*0.22,
-            width: MediaQuery.of(context).size.width*0.35,
+            height: height*0.15 > 100 ? 100 : height*0.15,
+            width: width*0.35 > 140 ? 140 : width*0.35,
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
                 Color(0xff003300),
@@ -69,8 +71,8 @@ class PremiumComponents{
                   padding: EdgeInsets.only(left: 15,right: 10),
                   child: AutoSizeText(
                     premium,
-                    maxFontSize: 26,
-                    minFontSize: 18,
+                    maxFontSize: 14,
+                    minFontSize: 8,
                     maxLines: 2,
                     style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
                 ),
@@ -141,10 +143,11 @@ class PremiumComponents{
 
   Widget CurrentPlan(BuildContext context,String text)
   {
+    double height = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 30),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height*0.11,
+      height: height*0.11 > 60 ? 60 : height*0.11,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: LinearGradient(colors: [
@@ -155,8 +158,8 @@ class PremiumComponents{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(text,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
-          AutoSizeText('Current Plan',style: TextStyle(color: Colors.white70,fontWeight: FontWeight.w400,fontSize: 14)),
+          Text(text,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 16),),
+          AutoSizeText('Current Plan',style: TextStyle(color: Colors.white70,fontWeight: FontWeight.w400,fontSize: 12)),
         ],
       ),
     );
