@@ -5,6 +5,8 @@ import 'package:flutter/painting.dart';
 import 'package:soundify/screens/mainScreens/PremiumScreenComponents/PremiumComponents.dart';
 import 'dart:async';
 
+import 'package:soundify/screens/mainScreens/PremiumScreenComponents/RoundedPremiumButton.dart';
+
 class PremiumScreen extends StatefulWidget {
   @override
   _PremiumScreenState createState() => _PremiumScreenState();
@@ -13,28 +15,23 @@ class PremiumScreen extends StatefulWidget {
 class _PremiumScreenState extends State<PremiumScreen> {
 
   PageController _pageController = PageController(initialPage: 0,viewportFraction: 0.8);
-
-  int Current_index = 0;
+  int currentIndex = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
     Timer.periodic(Duration(seconds: 3), (Timer timer) {
-          if(Current_index < 3)
+          if(currentIndex < 3)
             {
-              Current_index++;
+              currentIndex++;
             }
           else
             {
-              Current_index =0;
+              currentIndex =0;
             }
-
-          _pageController.animateToPage(Current_index, duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+          _pageController.animateToPage(currentIndex, duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
     });
-
-
   }
 
 
@@ -68,7 +65,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       pageSnapping: true,
                       onPageChanged: (index) {
                         setState(() {
-                          Current_index = index;
+                          currentIndex = index;
                         });
                       },
                       children: List.generate(PremiumComponents().Comparison_Free.length, (
@@ -87,13 +84,14 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       child: Row(
                         children: List.generate(
                             PremiumComponents().Comparison_Free.length,
-                                (index) => PremiumComponents().PageIndicator(index, Current_index)),
+                                (index) => PremiumComponents().PageIndicator(index, currentIndex)),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                PremiumComponents().GoPremium(context),
+                PremiumButton('get premium', (){}),
+                //PremiumComponents().GoPremium(context),
                 SizedBox(height: MediaQuery.of(context).size.height*0.07,),
                 PremiumComponents().CurrentPlan(context,'Soundify Free'),
                 SizedBox(height: MediaQuery.of(context).size.height*0.07,),

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         'Sign Up': (context)=>SignUp(),
         'Bottom Nav':(context)=>BottomNavScreen(),
         'Home':(context)=>HomeScreen(),
-        'Search':(context)=>Search_Page_Sliver(),
+        'Search':(context)=>SearchPageSliver(),
         'Library':(context)=>LibraryScreen(),
         'Premium':(context)=>PremiumScreen(),
         'Settings':(context)=>SettingsScreen(),

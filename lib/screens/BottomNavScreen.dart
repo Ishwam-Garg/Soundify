@@ -17,7 +17,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
 
   int _currentIndex = 0;
 
-  List<Widget> routes = [HomeScreen(),Search_Page_Sliver(),LibraryScreen(),PremiumScreen()];
+  List<Widget> routes = [HomeScreen(),SearchPageSliver(),LibraryScreen(),PremiumScreen()];
 
   PageController _pageController = PageController(initialPage: 0);
 

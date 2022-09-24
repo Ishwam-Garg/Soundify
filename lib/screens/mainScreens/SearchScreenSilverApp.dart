@@ -5,12 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:soundify/Constants/Color_Pallete.dart';
 import 'package:soundify/Constants/Strings.dart';
 
-class Search_Page_Sliver extends StatefulWidget {
+class SearchPageSliver extends StatefulWidget {
   @override
-  _Search_Page_SliverState createState() => _Search_Page_SliverState();
+  _SearchPageSliverState createState() => _SearchPageSliverState();
 }
 
-class _Search_Page_SliverState extends State<Search_Page_Sliver> {
+class _SearchPageSliverState extends State<SearchPageSliver> {
 
   var top = 0.0;
 
@@ -24,17 +24,19 @@ class _Search_Page_SliverState extends State<Search_Page_Sliver> {
           height: double.infinity,
           child: NestedScrollView(
             headerSliverBuilder: (BuildContext context, bool innerScrollBox){
+              double height = MediaQuery.of(context).size.height;
               return <Widget>[
                 SliverAppBar(
                   floating: true,
                   pinned: true,
                   backgroundColor: Colors.black,
-                  expandedHeight: MediaQuery.of(context).size.height*0.25,
+                  expandedHeight: height*0.25 > 250 ? 250 : height*0.25,
                   leading: Container(),
                   flexibleSpace: LayoutBuilder(
                       builder: (BuildContext context, BoxConstraints constraints)
                           {
                             top = constraints.biggest.height;
+                            print(top);
                             return FlexibleSpaceBar(
                               centerTitle: true,
                               background: Container(
@@ -59,8 +61,8 @@ class _Search_Page_SliverState extends State<Search_Page_Sliver> {
                                   ],
                                 ),
                               ),
-                              title: top <= 80.0 ? Components().SearchBar(context) : Container(),
                               titlePadding: EdgeInsets.symmetric(horizontal: 10),
+                              title: top <= 100.0 ? Components().SearchBar(context) : Container(),
                             );
                           }),
                 ),
@@ -72,12 +74,14 @@ class _Search_Page_SliverState extends State<Search_Page_Sliver> {
               color: Colors.black,
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
+                reverse: false,
                 primary: true,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      top <= 60.0 ? Components().SearchBar(context) : Container(),
                       SizedBox(height: MediaQuery.of(context).size.height*0.02,),
                       Align(
                         alignment: Alignment.centerLeft,
