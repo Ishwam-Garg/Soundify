@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:soundify/PlaySong/SongPage.dart';
 import 'package:marquee/marquee.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class OuterSongTile extends StatefulWidget {
   String name;
@@ -59,8 +61,11 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
             color: Colors.black,
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
-              image: NetworkImage(image),
-              fit: BoxFit.fill,
+              image: CachedNetworkImageProvider(
+                image,
+              ),
+              //image: NetworkImage(image),
+              fit: BoxFit.cover,
             ),
           ),
           child: Stack(

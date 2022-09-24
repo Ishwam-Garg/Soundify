@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         width: double.infinity,
         color: Colors.black,
         child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: ScrollPhysics(),
               child: Column(
                 children: [
                   Container(

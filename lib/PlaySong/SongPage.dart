@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -6,7 +7,7 @@ import 'package:marquee/marquee.dart';
 import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_circular_slider/flutter_circular_slider.dart';
+
 
 class PlaySongPage extends StatefulWidget {
 
@@ -41,7 +42,8 @@ class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMix
   Duration position; //position of song played
   String audioState;
 
-  initAudio(){
+  initAudio()async{
+
     audioPlayer.onDurationChanged.listen((updatedDuration) {
       setState(() {
         totalDuration = updatedDuration;
@@ -79,6 +81,7 @@ class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMix
   playAudio()
   {
     audioPlayer.play(widget.song_url);
+
     AddRecentlyPlayedSong();
   }
 
@@ -86,6 +89,7 @@ class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMix
   void initState() {
     // TODO: implement initState
     super.initState();
+
     animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);
     initAudio();
@@ -255,19 +259,23 @@ class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMix
                   await animationController.forward();
                   await animationController.reverse();
                 },
-                child: ScaleTransition(
-                  scale: scale,
-                  child: Container(
-                    height: MediaQuery.of(context).size.width*0.7,
-                    width: MediaQuery.of(context).size.width*0.7,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      image: DecorationImage(
-                        image: NetworkImage(widget.image_url),
-                        fit: BoxFit.fill,
-                      )
+                child: Stack(
+                  children: [
+                    ScaleTransition(
+                      scale: scale,
+                      child: Container(
+                        height: MediaQuery.of(context).size.width*0.7,
+                        width: MediaQuery.of(context).size.width*0.7,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          image: DecorationImage(
+                            image: NetworkImage(widget.image_url),
+                            fit: BoxFit.fill,
+                          )
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
               SizedBox(height: 12,),
@@ -425,7 +433,7 @@ class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMix
                 ),
               ),
               SizedBox(height: 20,),
-              Text(audioState == null ? '' : audioState ,style: TextStyle(fontSize: 16,color: Colors.white.withOpacity(0.2)),)
+              Text(audioState == null ? '' : audioState ,style: TextStyle(fontSize: 16,color: Colors.white.withOpacity(0.2)),),
             ],
           ),
         ),

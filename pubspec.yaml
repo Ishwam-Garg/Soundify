@@ -56,7 +56,8 @@ dev_dependencies:
   firebase_storage:
   #for loading design'
   modal_progress_hud_nsn: ^0.1.0-nullsafety-0
-  #modal_progress_hud_nsn: ^0.2.1
+  #for cached images
+  cached_network_image: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

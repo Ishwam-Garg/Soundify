@@ -4,6 +4,7 @@ import 'package:soundify/screens/OtherScreens/PlaylistPage_SilverAppBar.dart';
 import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class OuterPlaylistTile extends StatefulWidget {
   String url,name;
@@ -53,8 +54,10 @@ class _OuterPlaylistTileState extends State<OuterPlaylistTile> with SingleTicker
             color: Colors.grey.shade400,
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
-              image: NetworkImage(url),
-              fit: BoxFit.fill,
+              image: CachedNetworkImageProvider(
+                url,
+              ),
+              fit: BoxFit.cover,
             ),
           ),
           child: Stack(
