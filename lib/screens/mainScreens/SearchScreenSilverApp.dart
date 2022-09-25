@@ -81,7 +81,6 @@ class _SearchPageSliverState extends State<SearchPageSliver> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      top <= 60.0 ? Components().SearchBar(context) : Container(),
                       SizedBox(height: MediaQuery.of(context).size.height*0.02,),
                       Align(
                         alignment: Alignment.centerLeft,

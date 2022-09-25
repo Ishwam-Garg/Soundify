@@ -1,8 +1,6 @@
-import'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:soundify/Components/OuterPlaylistTile.dart';
 import 'package:soundify/Components/OuterSongTile.dart';
@@ -10,7 +8,9 @@ import 'package:soundify/Constants/Color_Pallete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:soundify/AppFunctions/Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:soundify/Models/Song.dart';
 import 'package:soundify/Services/HomeService.dart';
+import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -24,6 +24,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   User user = auth.currentUser;
   Color color;
   String welcometext = '';
+
+  Future<List<Song>> getSongsFromApi(String name) async{
+    print("trying");
+    Client client = Client();
+    var headers = {
+      'X-RapidAPI-Key': "3963e56e0dmshc3a247f20b453d3p1c7c93jsnaf0f0fa1cfc2",
+      'X-RapidAPI-Host': "deezerdevs-deezer.p.rapidapi.com"
+    };
+    client.get(
+      Uri.parse('https://deezerdevs-deezer.p.rapidapi.com/search?q=$name'),
+      headers: headers,
+    ).catchError((e) {
+          print("Error occurred : " + e.toString());
+    }).then((response) {
+      if (response != null)
+        {
+          if (response.statusCode == 200) {
+          print(response.body);
+          }
+        else {
+          print("failed to get song data");
+          }
+      }
+      else
+        {
+          print("Null response");
+        }
+    });
+  }
 
   void setWelcomeText(){
     DateTime now = DateTime.now();
@@ -56,13 +85,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);
   }
 
+  void reload()
+  {
+    setState(() {
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     color = ColorPalette().Genre_colors[ColorPalette().random_color.nextInt(ColorPalette().Genre_colors.length)];
     setWelcomeText();
     return RefreshIndicator(
       onRefresh: (){
-        return HomeService().refreshPage(context);
+        return HomeService().refreshPage(context,reload);
       },
       backgroundColor: Colors.white,
       color: color,

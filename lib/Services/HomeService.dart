@@ -26,8 +26,8 @@ class HomeService {
     return qn.docs;
   }
 
-  Future<Null> refreshPage(BuildContext context) async{
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  Future<Null> refreshPage(BuildContext context,void Function() callback) async{
+    /*ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -35,8 +35,8 @@ class HomeService {
           Text('Updating this page',style: TextStyle(color: Colors.white,fontSize: 14),),
         ],
       ),
-    ));
-    await Future.delayed(Duration(seconds: 2));
+    ));*/
+    await Future.delayed(Duration(seconds: 2),callback);
     return null;
   }
 }
