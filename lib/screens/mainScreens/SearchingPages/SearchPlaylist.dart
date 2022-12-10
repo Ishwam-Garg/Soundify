@@ -35,15 +35,26 @@ class _SearchPlaylistState extends State<SearchPlaylist> {
       color: Colors.black,
       child: SingleChildScrollView(
         child: FutureBuilder(
-            future: (searchString == null || searchString == "")
-            ? getPlayList()
-            : getSearchedPlaylist(),
+            //future: (searchString == null || searchString == "") ? getPlayList() : getSearchedPlaylist(),
+            future: getPlayList(),
             builder: (context,snapshot){
               if(snapshot.connectionState == ConnectionState.waiting)
               {
-                return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Color(0xff878787),
+                return Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                          color: Colors.white,
+                          backgroundColor: Colors.transparent,
+                        ),
+                        SizedBox(height: 10,),
+                        Text('Finding Best Results',style: TextStyle(fontSize: 12,color: Colors.white),),
+                      ],
+                    ),
                   ),
                 );
               }
@@ -55,11 +66,23 @@ class _SearchPlaylistState extends State<SearchPlaylist> {
               }
               else{
                 return Column(
-                  children: List.generate(snapshot.data.length, (index) => PlaylistTile(
-                    context,
-                    snapshot.data[index].data()["name"],
-                    snapshot.data[index].data()["url"],
-                  )),
+                  children: List.generate(snapshot.data.length, (index){
+
+                    String name = snapshot.data[index].data()["name"];
+                    name = name.toLowerCase();
+
+                    if(searchString!=null)
+                      searchString = searchString.toLowerCase();
+
+                    if(searchString == null || searchString.isEmpty || name.contains(searchString))
+                    return PlaylistTile(
+                      context,
+                      snapshot.data[index].data()["name"],
+                      snapshot.data[index].data()["url"],
+                    );
+                    else
+                      return Container();
+                  }),
                 );
               }
             }

@@ -23,6 +23,7 @@ class _SearchSongState extends State<SearchSong> {
     QuerySnapshot qn = await FirebaseFirestore.instance.collection("Songs").where("searchIndex",arrayContains: searchString.replaceAll(' ', '').toLowerCase()).get();
     return qn.docs;
   }
+
   Future getSongsData() async{
     QuerySnapshot qn = await FirebaseFirestore.instance.collection('Songs').get();
     return qn.docs;
@@ -40,22 +41,26 @@ class _SearchSongState extends State<SearchSong> {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: FutureBuilder(
-          future: (searchString == null || searchString == "") ? getSongsData() : getSearchedSongs(),
+          //future: (searchString == null || searchString == "") ? getSongsData() : getSearchedSongs(),
+          future: getSongsData(),
           builder: (context,snapshot){
             if(snapshot.connectionState == ConnectionState.waiting)
             {
               return Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: CircularProgressIndicator(
-                            backgroundColor: Color(0xff878787),
-                          ),
-                        ),
-                      ],
-                    ),
+                    children: [
+                      CircularProgressIndicator(
+                        color: Colors.white,
+                        backgroundColor: Colors.transparent,
+                      ),
+                      SizedBox(height: 10,),
+                      Text('Finding Best Results',style: TextStyle(fontSize: 12,color: Colors.white),),
+                    ],
+                  ),
                 ),
               );
             }
@@ -67,13 +72,22 @@ class _SearchSongState extends State<SearchSong> {
             }
             else{
               return Column(
-                children: List.generate(snapshot.data.length, (index) => SongTile(
-                  context,
-                  snapshot.data[index].data()["name"],
-                  snapshot.data[index].data()["artists"],
-                  snapshot.data[index].data()["image"],
-                  snapshot.data[index].data()["audio"],
-                )),
+                children: List.generate(snapshot.data.length, (index){
+                  String name = snapshot.data[index].data()["name"];
+                  name = name.toLowerCase();
+                  if(searchString!=null)
+                  searchString = searchString.toLowerCase();
+                  if(searchString == null || searchString.isEmpty || name.contains(searchString))
+                  return SongTile(
+                    context,
+                    snapshot.data[index].data()["name"],
+                    snapshot.data[index].data()["artists"],
+                    snapshot.data[index].data()["image"],
+                    snapshot.data[index].data()["audio"],
+                  );
+                  else
+                    return Container();
+                }),
               );
             }
           },
@@ -83,6 +97,9 @@ class _SearchSongState extends State<SearchSong> {
   }
 
   Widget SongTile(BuildContext context,String name,String artists,String image,String url){
+    if(url.isEmpty || name.isEmpty || image.isEmpty)
+      return Container();
+    else
     return GestureDetector(
       onTap: (){
           Navigator.push(context, MaterialPageRoute(

@@ -36,6 +36,9 @@ class _OuterSongTileState extends State<OuterSongTile> with SingleTickerProvider
   }
 
   Widget SongCard(BuildContext context,String name,String image,String song,String artists){
+    if(song.isEmpty || name.isEmpty || image.isEmpty)
+      return Container();
+    else
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTapDown: (_) async {
