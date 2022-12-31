@@ -1,10 +1,10 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+//import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 final googleSignIn = GoogleSignIn();
-FacebookLogin facebookLogin = FacebookLogin();
+//FacebookLogin facebookLogin = FacebookLogin();
 
 
 Future<User> google_SignIn() async {
@@ -76,12 +76,11 @@ Future<User> getCurrentUser() async{
 }
 
 //for facebook login
-Future loginWithFacebook(FacebookLoginResult _result)async{
+/*Future loginWithFacebook(FacebookLoginResult _result)async{
   FacebookAccessToken _accessToken = _result.accessToken;
   AuthCredential credential = FacebookAuthProvider.credential(_accessToken.token);
   var a = await auth.signInWithCredential(credential);
   User user = a.user;
-
 }
 //for facebook error handling
 Future handleLogin() async {
@@ -100,7 +99,7 @@ Future handleLogin() async {
       break;
 
   }
-}
+}*/
 
 
 //below code is not in use currently

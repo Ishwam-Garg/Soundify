@@ -104,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   print("Google Sign out Error: $e");
                 }
                 try{
-                  await facebookLogin.logOut();
+                  //await facebookLogin.logOut();
                 }catch(e){
                   print("facebook sign out Error: $e");
                 }

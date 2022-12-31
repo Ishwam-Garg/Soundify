@@ -44,7 +44,7 @@ dev_dependencies:
   #for image picking
   image_picker:
   #facebook login
-  flutter_facebook_login:
+  #flutter_facebook_login:
   #google signin plugins
   firebase_auth:
   google_sign_in:
@@ -60,6 +60,8 @@ dev_dependencies:
   cached_network_image: ^3.0.0
   #for http requests
   http: ^0.13.1
+  #for changing package name
+  change_app_package_name: ^1.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

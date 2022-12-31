@@ -193,11 +193,11 @@ class _SignInState extends State<SignIn> {
                               setState(() {
                                 isLoading = true;
                               });
-                              await handleLogin().whenComplete((){
+                              /*await handleLogin().whenComplete((){
                                 CreateUserInFireStore("Facebook");
                                 //CreateUserSearchIndexInFireStore();
                                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => BottomNavScreen()));
-                              });
+                              });*/
 
                             },
                             child: CircleAvatar(

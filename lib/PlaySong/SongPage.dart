@@ -409,7 +409,6 @@ class _PlaySongPageState extends State<PlaySongPage> with TickerProviderStateMix
                         padding: EdgeInsets.all(15),
                         child: playerStatus(audioState),
                         color: Colors.green,
-
                         ),
                     MaterialButton(
                       onPressed: (){
